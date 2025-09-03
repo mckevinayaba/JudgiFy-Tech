@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JudgiFy AI - Fair, Transparent AI-Powered Judging</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: #0b1220;
+            background-image: linear-gradient(180deg, #1e293b 0%, #0f172a 30%, #0b1220 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(11, 18, 32, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(249, 145, 44, 0.1);
+            padding: 16px 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #F9912C;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 24px;
+            color: #ffffff;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #F9912C 0%, #ea580c 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(249, 145, 44, 0.3);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: inherit;
+            font-weight: 800;
+            font-size: 64px;
+            line-height: 1.1;
+            color: #ffffff;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 .orange-deserves-fairness {
+            color: #F9912C !important;
+            font-weight: 700 !important;
+            text-shadow: 0 4px 20px rgba(249, 145, 44, 0.2);
+        }
+
+        .hero-subtitle {
+            font-family: inherit;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            margin-bottom: 16px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-tagline {
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 16px;
+            color: #F9912C;
+            margin-bottom: 40px;
+        }
+
+        /* EMAIL FORM */
+        .email-form {
+            display: flex;
+            max-width: 500px;
+            margin: 32px auto;
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 18px 24px;
+            border: 2px solid rgba(249, 145, 44, 0.3);
+            border-radius: 16px;
+            background: rgba(51, 65, 85, 0.4);
+            color: white;
+            font-family: inherit;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            min-width: 280px;
+        }
+
+        .email-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #F9912C;
+            background: rgba(51, 65, 85, 0.6);
+            box-shadow: 0 0 0 4px rgba(249, 145, 44, 0.1);
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #F9912C 0%, #ea580c 100%);
+            color: white;
+            border: none;
+            padding: 18px 36px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(249, 145, 44, 0.3);
+            white-space: nowrap;
+            min-height: 56px;
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(249, 145, 44, 0.4);
+        }
+
+        .primary-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .privacy-text {
+            font-family: inherit;
+            font-weight: 400;
+            font-size: 14px;
+            color: #e2e8f0;
+            margin-top: 16px;
+        }
+
+        /* PROOF SECTION */
+        .proof {
+            padding: 80px 20px;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        .live-pilot-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%);
+            color: #10b981;
+            padding: 14px 28px;
+            border-radius: 25px;
+            border: 2px solid rgba(16, 185, 129, 0.4);
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(15px);
+        }
+
+        .live-pilot-badge::before {
+            content: "●";
+            color: #10b981;
+            font-size: 10px;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .proof-headline {
+            font-family: inherit;
+            font-weight: 800;
+            font-size: 48px;
+            line-height: 1.1;
+            color: #ffffff;
+            margin-bottom: 32px;
+        }
+
+        .proof-headline .orange-aseb {
+            color: #F9912C !important;
+            font-weight: 700 !important;
+        }
+
+        .proof-description {
+            font-family: inherit;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            max-width: 650px;
+            margin: 0 auto 48px;
+        }
+
+        .partners-section {
+            margin-top: 48px;
+        }
+
+        .partners-label {
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 12px;
+            color: #F9912C;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+
+        .partner-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .partner-logo {
+            padding: 16px 24px;
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 14px;
+            color: #ffffff;
+            border: 1px solid rgba(249, 145, 44, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            min-width: 140px;
+            text-align: center;
+        }
+
+        .partner-logo:hover {
+            border-color: #F9912C;
+            background: rgba(30, 41, 59, 0.7);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(249, 145, 44, 0.2);
+        }
+
+        /* OUTCOME HIGHLIGHTS */
+        .outcomes {
+            padding: 64px 20px;
+        }
+
+        .outcomes-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .outcomes h2 {
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 32px;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .outcome-card {
+            padding: 32px 24px;
+            background: rgba(51, 65, 85, 0.15);
+            border-radius: 20px;
+            border: 1px solid rgba(249, 145, 44, 0.15);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .outcome-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(249, 145, 44, 0.3);
+            box-shadow: 0 16px 40px rgba(249, 145, 44, 0.1);
+        }
+
+        .outcome-text {
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 18px;
+            color: #ffffff;
+            line-height: 1.4;
+        }
+
+        /* HOW IT WORKS */
+        .how-it-works {
+            padding: 64px 20px;
+            text-align: center;
+        }
+
+        .how-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .how-it-works h2 {
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 32px;
+            color: #ffffff;
+            margin-bottom: 48px;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            text-align: left;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: #F9912C;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 20px;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        /* EARLY ACCESS */
+        .early-access {
+            padding: 64px 20px;
+            text-align: center;
+        }
+
+        .early-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 32px;
+            background: rgba(249, 145, 44, 0.05);
+            border-radius: 24px;
+            border: 1px solid rgba(249, 145, 44, 0.2);
+        }
+
+        .early-access h2 {
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 32px;
+        }
+
+        .perk-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .perk-item {
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 16px;
+            color: #e2e8f0;
+            margin-bottom: 16px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .perk-item::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #F9912C;
+            font-weight: 700;
+        }
+
+        /* SECOND CTA */
+        .second-cta {
+            padding: 48px 20px;
+            text-align: center;
+            background: rgba(249, 145, 44, 0.03);
+        }
+
+        .second-cta-content {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 64px 20px;
+        }
+
+        .faq-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq h2 {
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 32px;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .faq-item {
+            margin-bottom: 32px;
+        }
+
+        .faq-question {
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .faq-answer {
+            font-family: inherit;
+            font-weight: 400;
+            font-size: 16px;
+            color: #e2e8f0;
+        }
+
+        /* FOOTER */
+        .footer {
+            padding: 32px 20px;
+            text-align: center;
+            background: rgba(2, 6, 23, 0.8);
+            border-top: 1px solid rgba(249, 145, 44, 0.1);
+        }
+
+        .footer-content {
+            font-family: inherit;
+            font-weight: 400;
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.8;
+        }
+
+        .footer-link {
+            color: #F9912C;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* SUCCESS STATE */
+        .form-success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(30, 41, 59, 0.3) 100%);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 16px;
+            backdrop-filter: blur(20px);
+            display: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .hero {
+                padding: 60px 16px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .email-form {
+                flex-direction: column;
+                gap: 16px;
+                max-width: none;
+            }
+
+            .email-input {
+                min-width: auto;
+            }
+
+            .proof {
+                padding: 60px 16px;
+            }
+
+            .proof-headline {
+                font-size: 36px;
+            }
+
+            .outcomes {
+                padding: 60px 16px;
+            }
+
+            .outcomes-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+
+            .how-it-works {
+                padding: 60px 16px;
+            }
+
+            .step {
+                flex-direction: column;
+                text-align: center;
+                gap: 16px;
+            }
+
+            .early-access {
+                padding: 60px 16px;
+            }
+
+            .faq {
+                padding: 60px 16px;
+            }
+
+            .partner-logos {
+                gap: 12px;
+            }
+
+            .partner-logo {
+                font-size: 12px;
+                padding: 12px 16px;
+                min-width: 120px;
+            }
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero, .proof, .outcomes, .how-it-works, .early-access, .second-cta, .faq {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">J</div>
+                <div class="logo-text">JudgiFy</div>
+            </a>
+            <button onclick="scrollToForm()" class="nav-button">Join Waitlist</button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Every Competition<br><span class="orange-deserves-fairness">Deserves Fairness</span></h1>
+            <p class="hero-subtitle">AI-powered judging that removes bias, saves time, and restores trust in competitions worldwide with human approval. Give every participant a fair chance.</p>
+            <p class="hero-tagline">Born in Africa. Built for the world.</p>
+            
+            <!-- WORKING EMAIL FORM WITH AIRTABLE INTEGRATION -->
+            <div class="email-form">
+                <input type="email" 
+                       class="email-input" 
+                       placeholder="Enter your email address" 
+                       id="email-input"
+                       value="">
+                <button class="primary-button" id="submit-btn" onclick="handleSignup()">
+                    <span class="btn-text">Join Early Access Waitlist</span>
+                </button>
+            </div>
+            
+            <div id="success-message" class="form-success">
+                🎉 Success! Your email has been saved. We'll contact you soon with early access details!
+            </div>
+            
+            <p class="privacy-text">We only use your email for product updates. You can unsubscribe anytime.</p>
+        </div>
+    </section>
+
+    <!-- PROOF AND PREVIEW -->
+    <section class="proof">
+        <div class="container">
+            <div class="live-pilot-badge">LIVE PILOT</div>
+            <h2 class="proof-headline">Proven at Scale with <span class="orange-aseb">ASEB 2025</span></h2>
+            <p class="proof-description">The Africa Startup Ecosystem Builders Summit & Awards is using JudgiFy AI to process 2600+ nominations across 35 categories</p>
+            
+            <div class="partners-section">
+                <div class="partners-label">Ecosystem Partners</div>
+                <div class="partner-logos">
+                    <div class="partner-logo">ASEB Awards</div>
+                    <div class="partner-logo">GrowthWheel SA</div>
+                    <div class="partner-logo">Rise Addis Podcast</div>
+                    <div class="partner-logo">Setup A Startup</div>
+                    <div class="partner-logo">Women In Construction</div>
+                    <div class="partner-logo">Teen AI SA</div>
+                    <div class="partner-logo">ASEB Society</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OUTCOME HIGHLIGHTS -->
+    <section class="outcomes">
+        <div class="outcomes-content">
+            <h2>Transform Your Judging Process</h2>
+            <div class="outcomes-grid">
+                <div class="outcome-card">
+                    <p class="outcome-text">Save weeks of admin with auto-sorting of messy submissions</p>
+                </div>
+                <div class="outcome-card">
+                    <p class="outcome-text">Consistent, thorough evaluation for every entry - no rushed decisions</p>
+                </div>
+                <div class="outcome-card">
+                    <p class="outcome-text">Fair scores with detailed reasons for every decision</p>
+                </div>
+                <div class="outcome-card">
+                    <p class="outcome-text">White-label branding for your organization</p>
+                </div>
+                <div class="outcome-card">
+                    <p class="outcome-text">Multi-round competitions with different criteria</p>
+                </div>
+                <div class="outcome-card">
+                    <p class="outcome-text">Actionable feedback for every entrant</p>
+                </div>
+                <div class="outcome-card">
+                    <p class="outcome-text">Audit-ready reports for sponsors and boards</p>
+                </div>
+                <div class="outcome-card">
+                    <p class="outcome-text">Real-time progress tracking and conflict-of-interest detection</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+        <div class="how-content">
+            <h2>Simple. Transparent. Fair.</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Upload entries and your rubric</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">JudgiFy organizes categories and proposes scores with reasons</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Judges review and approve</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Export results and share winner cards</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EARLY ACCESS PERKS -->
+    <section class="early-access">
+        <div class="early-content">
+            <h2>Early Access Benefits</h2>
+            <ul class="perk-list">
+                <li class="perk-item">Priority in the beta cohorts</li>
+                <li class="perk-item">Founding organizer pricing</li>
+                <li class="perk-item">Support for your first pilot</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SECOND CTA -->
+    <section class="second-cta">
+        <div class="second-cta-content">
+            <button class="primary-button" onclick="scrollToForm()">Join Early Access Waitlist</button>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="faq-content">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">Pricing?</div>
+                <div class="faq-answer">Free for small events, Pro for regular organizers, Enterprise for large programs</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Timing?</div>
+                <div class="faq-answer">Rolling beta with new cohorts from the waitlist</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Data and privacy?</div>
+                <div class="faq-answer">Private by default with full audit trail</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            Johannesburg, South Africa<br>
+            partner@judgify.tech<br>
+            <a href="#" class="footer-link">For partners and media</a>
+        </div>
+    </footer>
+
+    <script>
+        function handleSignup() {
+            const email = document.getElementById('email-input').value.trim();
+            const submitBtn = document.getElementById('submit-btn');
+            const successMessage = document.getElementById('success-message');
+            const form = document.querySelector('.email-form');
+            const emailInput = document.getElementById('email-input');
+            
+            if (!email || !email.includes('@') || email.length < 5) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Show loading immediately
+            submitBtn.innerHTML = 'Joining...';
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+            
+            // Create hidden form to submit to Airtable
+            const airtableForm = document.createElement('form');
+            airtableForm.style.display = 'none';
+            airtableForm.method = 'POST';
+            airtableForm.action = 'https://airtable.com/appi9aNVcKMLKsEtu/pagcLTjXLyLi1hHwQ/form';
+            airtableForm.target = 'airtable-iframe';
+            
+            const emailField = document.createElement('input');
+            emailField.type = 'email';
+            emailField.name = 'fldXXX'; // Airtable will map this
+            emailField.value = email;
+            airtableForm.appendChild(emailField);
+            
+            // Create hidden iframe for submission
+            const iframe = document.createElement('iframe');
+            iframe.name = 'airtable-iframe';
+            iframe.style.display = 'none';
+            
+            document.body.appendChild(airtableForm);
+            document.body.appendChild(iframe);
+            
+            // Submit the form
+            try {
+                airtableForm.submit();
+                
+                // Show success after 2 seconds
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    
+                    // Hide success message and reset form after 4 seconds
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                        form.style.display = 'flex';
+                        
+                        // Reset form state
+                        emailInput.value = '';
+                        submitBtn.innerHTML = '<span class="btn-text">Join Early Access Waitlist</span>';
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                        
+                        // Focus on email input for next submission
+                        emailInput.focus();
+                    }, 4000);
+                    
+                    // Clean up hidden elements
+                    setTimeout(() => {
+                        if (document.body.contains(airtableForm)) {
+                            document.body.removeChild(airtableForm);
+                        }
+                        if (document.body.contains(iframe)) {
+                            document.body.removeChild(iframe);
+                        }
+                    }, 1000);
+                }, 2000);
+                
+            } catch (error) {
+                // Fallback: Open Airtable form directly
+                const airtableUrl = `https://airtable.com/appi9aNVcKMLKsEtu/pagcLTjXLyLi1hHwQ/form?prefill_Email=${encodeURIComponent(email)}`;
+                window.open(airtableUrl, '_blank');
+                
+                // Show success on main page and reset
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    
+                    // Reset after showing success
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                        form.style.display = 'flex';
+                        emailInput.value = '';
+                        submitBtn.innerHTML = '<span class="btn-text">Join Early Access Waitlist</span>';
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                        emailInput.focus();
+                    }, 4000);
+                }, 1000);
+            }
+        }
+
+        function scrollToForm() {
+            const hero = document.getElementById('hero');
+            if (hero) {
+                hero.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => {
+                    const emailInput = document.getElementById('email-input');
+                    if (emailInput) emailInput.focus();
+                }, 800);
+            }
+        }
+
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.outcome-card, .step, .faq-item, .partner-logo').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
